@@ -268,7 +268,7 @@ autocmd BufWritePre * call RemoveTrailingWhitespace()
 
 ### nodejs
 
-> npm, webpack, gulp
+> npm, webpack, gulp... (npm install -g <package-name>)
 
 .npmrc:
 
