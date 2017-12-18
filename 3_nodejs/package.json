@@ -1,0 +1,23 @@
+{
+  "name": "exponential",
+  "version": "1.5.9",
+  "homepage": "",
+  "description": "I love front-end, get started.",
+  "author": {
+    "name": "Thilina Fong",
+    "email": "15915940450@139.com",
+    "url": "http://fangxuecong.com/"
+  },
+  "main": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/15915940450/exponential"
+  },
+  "keywords": [
+    "exponential",
+    "front-end"
+  ],
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {}
+}

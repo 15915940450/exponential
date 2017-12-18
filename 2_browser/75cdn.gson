@@ -1,0 +1,9 @@
+{
+  "rules": {
+    "ajax.googleapis.com/ajax/libs": {
+      "dstURL": "lib.baomitu.com",
+      "kind": "wildcard",
+      "enable": true
+    }
+  }
+}
