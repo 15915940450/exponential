@@ -227,6 +227,13 @@ Plugin 'tpope/vim-surround'
 " ----- vim-vue ----- {{{
 Plugin 'posva/vim-vue'
 " }}}
+" ----- vim-maximizer ----- {{{
+Plugin 'szw/vim-maximizer'
+
+  nnoremap <silent><F6> :MaximizerToggle<CR>
+  vnoremap <silent><F6> :MaximizerToggle<CR>gv
+  inoremap <silent><F6> <C-o>:MaximizerToggle<CR>
+" }}}
 
 filetype on
 call vundle#end()
@@ -245,7 +252,6 @@ function! RemoveTrailingWhitespace()
 endfunction
 autocmd BufWritePre * call RemoveTrailingWhitespace()
 " }}}
-
 ```
 
 ### 瀏覽器擴展
@@ -268,7 +274,7 @@ autocmd BufWritePre * call RemoveTrailingWhitespace()
 
 ### nodejs
 
-> npm, webpack, gulp... (npm install -g <package-name>)
+> npm, webpack, gulp... (npm install -g package-name)
 
 .npmrc:
 
