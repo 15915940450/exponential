@@ -224,9 +224,6 @@ Plugin 'vim-syntastic/syntastic'
 " ----- vim-surround(expo) ----- {{{
 Plugin 'tpope/vim-surround'
 " }}}
-" ----- vim-vue ----- {{{
-Plugin 'posva/vim-vue'
-" }}}
 " ----- vim-maximizer ----- {{{
 Plugin 'szw/vim-maximizer'
 
