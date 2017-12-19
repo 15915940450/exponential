@@ -231,6 +231,11 @@ Plugin 'szw/vim-maximizer'
   vnoremap <silent><F6> :MaximizerToggle<CR>gv
   inoremap <silent><F6> <C-o>:MaximizerToggle<CR>
 " }}}
+" ----- vim-vue ----- {{{
+Plugin 'posva/vim-vue'
+
+  autocmd BufRead,BufNewFile *.vue setlocal filetype=vue
+" }}}
 
 filetype on
 call vundle#end()
@@ -249,6 +254,8 @@ function! RemoveTrailingWhitespace()
 endfunction
 autocmd BufWritePre * call RemoveTrailingWhitespace()
 " }}}
+
+" $
 ```
 
 ### 瀏覽器擴展
