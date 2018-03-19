@@ -37,7 +37,7 @@ set nocompatible
 set nobackup
 set noswapfile
 set history=1024
-set autochdir
+"set autochdir
 set whichwrap=b,s,<,>,[,]
 set nobomb
 set backspace=indent,eol,start whichwrap+=<,>,[,]
@@ -160,6 +160,7 @@ set rtp+=$VIM/vimfiles/bundle/Vundle.vim
 call vundle#begin('$VIM/vimfiles/bundle')
 
 " ----- Vundle ----- {{{
+"  1.vandle,2.nerdtree,3.ctrlp,4.nerdcommenter,5.emmet,6.syntastic,7.bufexplorer,8.maximizer,9.easygrep,10.vue
 Plugin 'VundleVim/Vundle.vim'
 " }}}
 " ----- nerdtree ----- {{{
@@ -174,7 +175,7 @@ Plugin 'scrooloose/nerdtree'
  let g:NERDTreeWinPos = 'right'
  let g:NERDTreeDirArrowExpandable = '+'
  let g:NERDTreeDirArrowCollapsible = '-'
- nmap <leader>n :NERDTreeToggle <cr>
+ nmap <C-n> :NERDTreeToggle <cr>
  "
  "if exists('g:NERDTreeWinPos')
      "autocmd vimenter * NERDTree C:\wamp64\www\CMS-FrontEnd
@@ -191,9 +192,6 @@ Plugin 'scrooloose/nerdcommenter'
 " }}}
 " ----- emmet-vim ----- {{{
 Plugin 'mattn/emmet-vim'
-" }}}
-" ----- vim-fugitive(expo) ----- {{{
-Plugin 'tpope/vim-fugitive'
 " }}}
 " ----- syntastic(expo) ----- {{{
 Plugin 'vim-syntastic/syntastic'
@@ -213,15 +211,24 @@ Plugin 'vim-syntastic/syntastic'
   "ESLint...................|syntastic-javascript-eslint|
   let g:syntastic_javascript_checkers = ['eslint']
 " }}}
-" ----- vim-surround(expo) ----- {{{
-Plugin 'tpope/vim-surround'
+" ----- bufexplorer.zip ----- {{{
+Plugin 'vim-scripts/bufexplorer.zip'
+"==<leader>+b then v
 " }}}
 " ----- vim-maximizer ----- {{{
 Plugin 'szw/vim-maximizer'
-
   nnoremap <silent><F6> :MaximizerToggle<CR>
   vnoremap <silent><F6> :MaximizerToggle<CR>gv
   inoremap <silent><F6> <C-o>:MaximizerToggle<CR>
+" }}}
+" ----- vim-easygrep ----- {{{
+Plugin 'dkprice/vim-easygrep'
+let g:EasyGrepRecursive=1
+let g:EasyGrepIgnoreCase=1
+let g:EasyGrepHidden=1
+"==<leader>+v then o
+"==<leader>+v then v
+"==<leader>+v then r
 " }}}
 " ----- vim-vue ----- {{{
 Plugin 'posva/vim-vue'
