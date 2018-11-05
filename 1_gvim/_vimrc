@@ -29,7 +29,7 @@ let mapleader=","
   set nobackup
   set noswapfile
   set history=969
-  "set autochdir
+  set autochdir
   set whichwrap=b,s,<,>,[,]
   set nobomb
   set backspace=indent,eol,start whichwrap+=<,>,[,]
@@ -45,7 +45,6 @@ let mapleader=","
   set encoding=utf-8
   set langmenu=zh_CN
   let $LANG = 'en_US.UTF-8'
-  colorscheme desert
   source $VIMRUNTIME/delmenu.vim
   source $VIMRUNTIME/menu.vim
   set cursorline
@@ -62,9 +61,13 @@ let mapleader=","
   set guioptions-=e
   " set nolist
   "set listchars=trail:·,extends:>,precedes:<
+  set laststatus=2
   set statusline +=%3*\ %{''.(&fenc!=''?&fenc:&enc).''}
   set statusline +=%4*\ %<%F%*
-  set guifont=Inconsolata:h12:cANSI
+  colorscheme snow
+  set background=light
+  "desert light dark
+  set guifont=Source\ Code\ Variable:h13:cANSI
 " }}}
 
 " copy {{{
@@ -88,13 +91,18 @@ let mapleader=","
   filetype off
   set rtp+=$VIM/vimfiles/bundle/Vundle.vim
   call vundle#begin('$VIM/vimfiles/bundle')
-  "  1.vandle,2.nerdtree,3.ctrlp,4.nerdcommenter,5.emmet,6.syntastic,7.bufexplorer,8.maximizer,9.easygrep,10.vue
+  "  1.vandle,2.vim-airline,3.nerdtree,4.ctrlp,5.nerdcommenter,6.emmet,7.ultisnips,8.syntastic,9.bufexplorer,10.maximizer,11.easygrep,12.vue
+
   " ----- Vundle ----- {{{
   Plugin 'VundleVim/Vundle.vim'
   " }}}
+
+  " ----- vim-airline ----- {{{
+  Plugin 'vim-airline/vim-airline'
+  " }}}
   " ----- nerdtree ----- {{{
   Plugin 'scrooloose/nerdtree'
-   let NERDTreeIgnore=['.idea', '.vscode', 'node_modules', '*.pyc']
+   let NERDTreeIgnore=['node_modules','\.git$']
    let NERDTreeBookmarksFile = $VIM . '/NERDTreeBookmarks'
    let NERDTreeMinimalUI = 1
    let NERDTreeBookmarksSort = 1
@@ -105,20 +113,28 @@ let mapleader=","
    let g:NERDTreeDirArrowCollapsible = '-'
    "
    "if exists('g:NERDTreeWinPos')
-       "autocmd vimenter * NERDTree C:\wamp64\www\CMS-FrontEnd
        "autocmd vimenter * NERDTree $HOME\gvimnerdtree
    "endif
   " }}}
   " ----- ctrlp ----- {{{
   Plugin 'kien/ctrlp.vim'
    let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:10,results:10'
-   set wildignore+=*\\.git\\*,*\\tmp\\*,*.swp,*.zip,*.exe,*.pyc
+   set wildignore+=*\\node_modules\\*,*\\.git\\*,*\\es\\*,*\\eb_src\\*,*\\batterystation\\*,*\\ccbike\\*,*\\TEST\\*
+   " Insert
   " }}}
   " ----- nerdcommenter ----- {{{
   Plugin 'scrooloose/nerdcommenter'
   " }}}
   " ----- emmet-vim ----- {{{
   Plugin 'mattn/emmet-vim'
+  " }}}
+  " ----- ultisnips ----- {{{
+  Plugin 'SirVer/ultisnips'
+    let g:UltiSnipsSnippetDirectories=[$HOME.'/UltiSnips']
+    " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+    let g:UltiSnipsExpandTrigger="<tab>"
+    let g:UltiSnipsJumpForwardTrigger="<c-b>"
+    let g:UltiSnipsJumpBackwardTrigger="<c-z>"
   " }}}
   " ----- syntastic(expo) ----- {{{
   Plugin 'vim-syntastic/syntastic'
@@ -152,14 +168,16 @@ let mapleader=","
   " }}}
   " ----- vim-vue ----- {{{
   Plugin 'posva/vim-vue'
-    autocmd BufRead,BufNewFile *.vue setlocal filetype=vue
+    "firstly install -g eslint eslint-plugin-vue babel-eslint
+    autocmd FileType vue syntax sync fromstart
+    autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.javascript
   " }}}
+
   filetype on
   call vundle#end()
 " }}}
 
 " Function {{{
-  " Remove trailing whitespace when writing a buffer, but not for diff files.
   function! RemoveTrailingWhitespace()
       if &ft != "diff"
           let b:curcol = col(".")
@@ -170,6 +188,26 @@ let mapleader=","
       endif
   endfunction
   autocmd BufWritePre * call RemoveTrailingWhitespace()
+
+  let g:ft = ''
+  function! NERDCommenter_before()
+    if &ft == 'vue'
+      let g:ft = 'vue'
+      let stack = synstack(line('.'), col('.'))
+      if len(stack) > 0
+        let syn = synIDattr((stack)[0], 'name')
+        if len(syn) > 0
+          exe 'setf ' . substitute(tolower(syn), '^vue_', '', '')
+        endif
+      endif
+    endif
+  endfunction
+  function! NERDCommenter_after()
+    if g:ft == 'vue'
+      setf vue
+      let g:ft = ''
+    endif
+  endfunction
 " }}}
 
 " keymap快捷鍵 {{{
@@ -178,11 +216,19 @@ let mapleader=","
   nmap <leader>e :e $MYVIMRC<cr>
   nmap <leader>tn :tabnew<cr>
   nmap <leader>tc :tabclose<cr>
+  nmap <leader>r :%s/from/to/g
+  nmap <leader>1 :only<cr>
+  nmap <leader>2 :split<cr>
+  nmap <leader>3 :vsplit<cr>
+  nmap <leader>nm :NoMatchParen<cr>
+  nmap <leader>dm :DoMatchParen<cr>
   nnoremap <leader><cr> :noh<cr>
   nnoremap <leader>w :set wrap!<cr>
   nmap <silent> <leader>x :!start explorer %:p:h<CR>
   nmap <silent> <leader>cmd :!start cmd /k cd %:p:h<cr>
   nmap <leader>fp :let @*=substitute(expand("%:p"), "/", "\\", "g")<CR>
+  "==<leader>+b then e
+  "==<leader>+b then s
   "==<leader>+b then v
   "==<leader>+v then o
   "==<leader>+v then v
@@ -193,6 +239,8 @@ let mapleader=","
   nmap <C-n> :NERDTreeToggle <cr>
 
   "alt
+  nmap <M-a> <C-W>k
+  nmap <M-z> <C-W>j
   nmap <M-n> <C-W>h
   nmap <M-m> <C-W>l
   nnoremap <M-j> :resize +5<cr>
@@ -212,5 +260,8 @@ let mapleader=","
   vnoremap <silent><F6> :MaximizerToggle<CR>gv
   inoremap <silent><F6> <C-o>:MaximizerToggle<CR>
 " }}}
+
+"1.startup directory(https://stackoverflow.com/questions/1180955/vim-change-start-up-directory)
+:cd $HOME\ili\AppServ\www
 
 " $
